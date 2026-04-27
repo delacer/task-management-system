@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>Task Manager</h2>
+    <ul>
+      <li data-filter="All" onclick="filterTasks(event)">Dashboard</li>
+      <li data-filter="Pending" onclick="filterTasks(event)">My Tasks</li>
+      <li data-filter="Completed" onclick="filterTasks(event)">Completed</li>
+      <li onclick="logout()" style="cursor:pointer;">Logout</li>
+    </ul>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <h1>Dashboard</h1>
+      <input type="text" id="searchBar" placeholder="Search tasks..." onkeyup="searchTasks()">
+      <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+      <button onclick="openForm()">+ New Task</button>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="analytics">
+      <div class="card">
+        <p>Total Tasks</p>
+        <h3 id="totalTasks">0</h3>
+      </div>
+      <div class="card">
+        <p>Completed</p>
+        <h3 id="completedTasks">0</h3>
+      </div>
+      <div class="card">
+        <p>Pending</p>
+        <h3 id="pendingTasks">0</h3>
+      </div>
+     <div class="card">
+  <p>Productivity Score</p>
+  <div class="progress-container">
+    <div id="productivityBar" class="progress-bar"></div>
+  </div>
+  <h3 id="productivityScore">0%</h3>
+</div>
+
+
+    </div>
+
+    <!-- TASK BOARD -->
+    <div class="board">
+      <div class="column" ondrop="drop(event,'Pending')" ondragover="allowDrop(event)">
+        <h3>Pending</h3>
+        <div id="pending"></div>
+      </div>
+      <div class="column" ondrop="drop(event,'In Progress')" ondragover="allowDrop(event)">
+        <h3>In Progress</h3>
+        <div id="progress"></div>
+      </div>
+      <div class="column" ondrop="drop(event,'Completed')" ondragover="allowDrop(event)">
+        <h3>Completed</h3>
+        <div id="completed"></div>
+      </div>
+    </div>
+
+    <!-- CALENDAR VIEW -->
+<div class="calendar">
+  <h3>📅 Calendar View</h3>
+  <div id="calendarContainer"></div>
+</div>
+
+
+    <!-- PRODUCTIVITY CHART -->
+    <div class="charts">
+      <h3>📊 Productivity Overview</h3>
+      <canvas id="productivityChart"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<!-- CREATE TASK MODAL -->
+<div id="taskModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeForm()" style="float:right;cursor:pointer;">&times;</span>
+    <h3>Create New Task</h3>
+    <input id="title" placeholder="Task Title">
+    <input id="description" placeholder="Description">
+    <select id="priority">
+      <option selected disabled>Select priority</option>
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+    <select id="recurrence">
+  <option value="">No Recurrence</option>
+  <option value="Daily">Daily</option>
+  <option value="Weekly">Weekly</option>
+  <option value="Monthly">Monthly</option>
+</select>
+
+    <input type="date" id="deadline" placeholder="Deadline">
+    <button onclick="createTask()">Create Task</button>
+  </div>
+</div>
+
+<!-- EDIT TASK MODAL -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeEdit()" style="float:right;cursor:pointer;">&times;</span>
+    <h3>Edit Task</h3>
+    <input id="edit_title" placeholder="Task Title">
+    <input id="edit_description" placeholder="Description">
+    <select id="edit_priority">
+       <option selected disabled>Select priority</option>
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+    <select id="edit_status">
+       <option selected disabled>Select Task Status</option>
+      <option value="Pending">Pending</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+    <input type="date" id="edit_deadline">
+    <button onclick="updateTask()">Update Task</button>
+  </div>
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
